@@ -2,8 +2,8 @@
   "name": "raspi-camera",
   "version": "1.0.0",
   "description": "Package for interfacing with raspberry pi camera",
-  "main": "./build/src/index.js",
-  "types": "./build/src/index.d.ts",
+  "main": "./build/src/raspi_camera.js",
+  "types": "./build/src/raspi_camera.d.ts",
   "scripts": {
     "lint": "eslint ./**/*.ts",
     "build": "tsc -b",
@@ -36,6 +36,10 @@
   },
   "dependencies": {
     "camera-interface": "github:Pi-Eye/camera-interface",
-    "pi-camera-connect": "^0.3.4"
+    "events": "^3.3.0",
+    "node-stream-processor-types": "github:Pi-Eye/node-stream-processor-types",
+    "path": "^0.12.7",
+    "pi-camera-connect": "^0.3.4",
+    "typed-emitter": "^2.1.0"
   }
 }
