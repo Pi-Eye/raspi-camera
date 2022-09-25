@@ -1,4 +1,3 @@
-import fs from "fs";
 import { StreamCamera, StreamOptions } from "pi-camera-connect";
 import { SPTypes } from "node-stream-processor-types";
 import { EventEmitter } from "events";
@@ -18,10 +17,8 @@ export default class RaspiCamera {
   private camera_: StreamCamera;
   private options_: StreamOptions & SPTypes.RequiredSettings;
 
-  private config_file_loc_: string;
-
-  constructor(config_file_loc: string) {
-    this.ReadConfigFile(config_file_loc);
+  constructor(settings: StreamOptions & SPTypes.RequiredSettings) {
+    this.options_ = Object.assign(DefaultSettings, settings);
     this.CreateCamera();
   }
 
@@ -30,14 +27,8 @@ export default class RaspiCamera {
    * @param settings new settings to set
    */
   SetCameraSettings(settings: StreamOptions & SPTypes.RequiredSettings) {
-    try {
-      fs.writeFileSync(this.config_file_loc_, JSON.stringify(settings));
-    } catch (error) {
-      console.warn(`Error writing new camera settings. Error: ${error}`);
-      return;
-    }
     this.Stop();
-    this.ReadConfigFile(this.config_file_loc_);
+    this.options_ = Object.assign(DefaultSettings, settings);
     this.CreateCamera();
   }
 
@@ -60,16 +51,5 @@ export default class RaspiCamera {
       console.error(`Error creating camera, switching to defaults. Error: ${error}`);
       throw error;
     }
-  }
-
-  /**
-   * ReadConfigFile() - Reads JSON config file and sets this.options_
-   * @param config_file_loc location of file
-   */
-  private ReadConfigFile(config_file_loc: string) {
-    this.config_file_loc_ = config_file_loc;
-    const file = fs.readFileSync(config_file_loc);
-    const options = JSON.parse(file.toString());
-    this.options_ = Object.assign(DefaultSettings, options);
   }
 }
