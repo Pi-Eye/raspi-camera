@@ -2,13 +2,13 @@
   "name": "raspi-camera",
   "version": "1.0.0",
   "description": "Package for interfacing with raspberry pi camera",
-  "main": "./build/src/raspi_camera.js",
-  "types": "./build/src/raspi_camera.d.ts",
+  "main": "./lib/src/raspi_camera.js",
+  "types": "./lib/src/raspi_camera.d.ts",
   "scripts": {
     "lint": "eslint ./**/*.ts",
     "build": "tsc -b",
     "pretest": "npm run build",
-    "test": "mocha ./build/**/*.test.js",
+    "test": "mocha ./lib/**/*.test.js",
     "coverage": "nyc npm test",
     "postinstall": "npm run build"
   },
